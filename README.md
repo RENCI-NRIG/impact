@@ -3,13 +3,15 @@
 ImPACT will free researchers to focus more fully on science by supporting the analysis of multi-institutional data while satisfying relevant regulations and interests. It is designed to facilitate secure cooperative analysis, meeting a pressing need in the research community. ImPACT seeks to develop an integrative model for management of trust, deploying a collection of supportive mechanisms at scale into a model cyber-infrastructure. The project develops methodologies with best practices in networking, data management, security, and privacy preservation to fit a variety of use cases.
 
 ## Installation: Major Components
-1. Proconsul (or the poor man's substitute, described below)
+1. The Proconsul web application (or the poor man's substitute, described below)
 1. Shibboleth with optional Grouper
 1. Active Directory Domain Controller
 1. Singularity Hub
 1. Jenkins
 
-Proconsul's author, [Rob Carter](https://github.com/carte018), has excellent instructions [here](https://github.com/carte018/Proconsul/tree/master/Dockerized). Condensed installation instructions documenting our experience installing and configuring the software are below.
+Proconsul's author, [Rob Carter](https://github.com/carte018), has excellent instructions [here](https://github.com/carte018/Proconsul/tree/master/Dockerized).
+
+Condensed installation instructions documenting our experiences installing and configuring the software are below.
 
 ### _Prerequisite:_ Shibboleth, optional Grouper
 
@@ -17,11 +19,11 @@ Your institution's Shibboleth Identity Provider is a prerequisite for running Pr
 
 Proconsul checks for the existence of `/etc/shibboleth/sp-key.pem` and will skip Shibboleth configuration during the build process.
 
-If you are able to use the included Shibboleth service provider, you may configure it by setting appropriate values in [master.config](master.config).
+If you are able to use the included Shibboleth service provider, you may configure it by setting appropriate values in [master.config](master.config.sample). Proconsul supports bilateral federation (with a single IDP) or multilateral.
 
 ### _Prerequisite:_ Active Directory Domain Controller
 
-_(this section shamelessly stolen from [Rob Carter](https://github.com/carte018))_
+This section shamelessly stolen from [Rob Carter](https://github.com/carte018)).
 
 Proconsul can be used for a number of purposes, from managing privileged access within
 an AD and reducing the attack surface for domain admin accounts within the AD to 
@@ -110,13 +112,61 @@ Retrieve the current source from GitHub:
 
 ```git clone https://github.com/carte018/proconsul```
 
-### Shibboleth, Grouper
+Proconsul requires a public/private key pair and a signed SSL certificate in order to operate, and the subject of the certificate must match the name users will use when connecting to the service. You will need to provide the names of two files -- one containing a PEM- formatted version of the server's private key and one containing a PEM-formatted version of the SSL certificate you'll be using for your Proconsul server in order to build the Proconsul installation.
 
-Your institution's Shibboleth Identity Provider is a prerequisite for running Proconsul, but depending on the configuration requirements of your institution you may need to install and configure a Shibboleth service provider on the Virtual Machine rather than using the service provided in the Docker container. In UNC's case, a custom MetadataProvider and additions to the attribute-map.xml file necessitated this.
+##### Populate master.config
 
-Proconsul checks for the existence of `/etc/shibboleth/sp-key.pem` and will skip Shibboleth configuration during the build process.
+Please find Rob Carter's expansion of each setting below:
 
-### Active Directory Domain Controller
+**fqdn** - the hostname users will use in URLs to contact your Proconsul instance  
+**certfile** - full pathname to a file containing your SSL certificate  
+**keyfile** -- full pathname to a file containing your SSL private key  
+**adldapurl** -- LDAP URL for connecting to your AD (usually "ldaps://domain.name:636")  
+**adbinddn** -- UPN of the bind user Proconsul should use in the AD  
+**adbindcred** -- password for the user in adbinddn  
+**addomain** -- DNS name of your AD domain (eg. "my.dom.ain")  
+**adsearchbase** -- DN of the root of you AD domain (eg., "DC=my,DC=dom,DC=ain")  
+**usedelegatedadmin** -- Unless you're at Duke, enter "n" here.  
+**addeptbase** -- Unless you're at Duke, leave this empty  
+**adorgbase** -- Unless you're at Duke, leave this empty  
+**adtargetbase** -- OU where Proconsul will create its dynamic users (full DN)  
+**adldapdcs** -- comma-separated list of LDAP URLs for individual DCs in your domain  
+**addagroupdn** -- DN of the AD group to use as the domain admins group   
+**adproconsuldefgrp** -- DN of the AD group Proconsul should add its dynamic users to   
+**adsiteprefix** -- AD site (or unique prefix thereof) to restrict Proconsul to (if any)  
+**rdpdockerimage** -- name/tag to use for the normal-sized RDP client container  
+**rdplargedockerimage** -- name/tag to use for the large-sized RDP client container  
+**vncdockerimage**  -- name/tag to use for the normal-sized VNC client container  
+**vnclargedockerimage** -- name/tag to use for the large-sized VNC client container  
+**dockerhost** -- IP address of the host where Docker containers should be run (almost always 127.0.0.1)  
+**dockercpuset** -- cpuset value for your dockerhost (eg., "0-1" for a 2-core server)  
+**novnchostname** -- host where novnc connections should be sent (usually == $fqdn)  
+**mysqlhost** -- IP of host where Proconsul MySQL server runs (usually 127.0.0.1)  
+**proconsuluser** -- MySQL userid to create for use with Proconsul schema  
+**proconsuldbpw** -- password to use for proconsuluser in the MySQL DB  
+**logouturl** -- URL to anchor behind the "sign out" link on Procosnul pages  
+**pcadminlist** -- list of REMOTE_USER values for users who should have rights to the Proconsul administrative UI -- PROBABLY NEEDS TO INCLUDE YOURS  
+**authnmode** -- authentication mode (for now, this **must** be "saml")  
+**federationmode** -- "bilateral" to federate with one IDP, "multilateral" for a full SAML federation  
+**spentityid** -- unique entityID to use for the Proconsul SAML relying party  
+**idpentityid** -- entityID of your IDP (if bilateral above); empty otherwise  
+**discoveryurl** -- URL of SAML federation discovery service (if multilateral federation -- empty otherwise)  
+**federationmdurl** -- URL to retrieve IDP or federation metadata  
+**mdsigningkey** -- file containing certificate to validate metadata signature  
+**dockergenuser** -- UPN of AD user for docker-gen to use for cleanup  
+**dockergenpw** -- password for dockergenuser  
+
+##### Build Docker Containers
+
+To build a fresh install:  `./build -c master.config`
+
+To rebuild for reconfiguration without wiping out the MySQL database:  `./build -c master.config -r`
+
+Fun with semantics: in this case, _rebuild_ means _rebuild everything except the database_ and is probably what you'll run most often.
+
+##### Launch Proconsul
+
+`./run3.sh`
 
 ### SingularityHub
 
