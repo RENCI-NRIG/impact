@@ -11,13 +11,15 @@ ImPACT will free researchers to focus more fully on science by supporting the an
 
 Proconsul's author, [Rob Carter](https://github.com/carte018), has excellent instructions [here](https://github.com/carte018/Proconsul/tree/master/Dockerized). Condensed installation instructions documenting our experience installing and configuring the software are below.
 
-### Shibboleth, Grouper
+### _Prerequisite:_ Shibboleth, optional Grouper
 
 Your institution's Shibboleth Identity Provider is a prerequisite for running Proconsul, but depending on the configuration requirements of your institution you may need to install and configure a Shibboleth service provider on the Virtual Machine rather than using the service provided in the Docker container. In UNC's case, a custom MetadataProvider and additions to the attribute-map.xml file necessitated this.
 
 Proconsul checks for the existence of `/etc/shibboleth/sp-key.pem` and will skip Shibboleth configuration during the build process.
 
-### Active Directory Domain Controller
+If you are able to use the included Shibboleth service provider, you may configure it by setting appropriate values in [master.config](master.config).
+
+### _Prerequisite:_ Active Directory Domain Controller
 
 _(this section shamelessly stolen from [Rob Carter](https://github.com/carte018))_
 
