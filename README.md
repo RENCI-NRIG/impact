@@ -96,6 +96,8 @@ Proconsul's spawned Docker containers terminate.  A domain admin account will
 work just fine, but you may prefer to use a less privileged account with docker-gen
 for purposes of compartmentalization.
 
+It is necessary to extend the Active Directory schema to include POSIX mappings for users who will use Proconsul to log in to Linux machines, configured with [SSSd](sssd.conf). The minimum attribute set required includes uidNumber, gidNumber, homeDirectory, and loginShell. homeDirectory may be left blank but would relegate users to a default home directory at the root of the filesystem.
+
 ### Proconsul
 
 Prepare a Linux server running [Docker](https://www.docker.com/get-started). Proconsul requires the Docker web service API, so be sure `dockerd-current` launches with the following options: 
@@ -114,7 +116,7 @@ Retrieve the current source from GitHub:
 
 Proconsul requires a public/private key pair and a signed SSL certificate in order to operate, and the subject of the certificate must match the name users will use when connecting to the service. You will need to provide the names of two files -- one containing a PEM- formatted version of the server's private key and one containing a PEM-formatted version of the SSL certificate you'll be using for your Proconsul server in order to build the Proconsul installation.
 
-##### Populate master.config
+##### Populate [master.config](master.config.sample)
 
 Please find Rob Carter's expansion of each setting below:
 
