@@ -3,11 +3,11 @@
 ImPACT will free researchers to focus more fully on science by supporting the analysis of multi-institutional data while satisfying relevant regulations and interests. It is designed to facilitate secure cooperative analysis, meeting a pressing need in the research community. ImPACT seeks to develop an integrative model for management of trust, deploying a collection of supportive mechanisms at scale into a model cyber-infrastructure. The project develops methodologies with best practices in networking, data management, security, and privacy preservation to fit a variety of use cases.
 
 ## Installation: Major Components
-1. The Proconsul web application (or the poor man's substitute, described below)
-1. Shibboleth with optional Grouper
-1. Active Directory Domain Controller
-1. Singularity Hub
-1. Jenkins
+1. The **Proconsul web application** (or the abridged proconsul, described below)
+1. **Shibboleth with optional Grouper** — _for authentication and authorization_
+1. **Active Directory Domain Controller** — _to hold temporary accounts used for temporal virtual machine login_
+1. **Singularity Hub** — _for storing Singularity images of end-user applications_
+1. **Jenkins** — _for continuous integration testing of Singularity images_
 
 Proconsul's author, [Rob Carter](https://github.com/carte018), has excellent instructions [here](https://github.com/carte018/Proconsul/tree/master/Dockerized).
 
@@ -173,3 +173,11 @@ Fun with semantics: in this case, _rebuild_ means _rebuild everything except the
 ### SingularityHub
 
 ### Jenkins
+
+## Abridged Proconsul
+
+### Linux VMs
+
+### TurboVNC
+
+### Singularity Client
