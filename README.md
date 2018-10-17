@@ -2,16 +2,27 @@
 
 ImPACT will free researchers to focus more fully on science by supporting the analysis of multi-institutional data while satisfying relevant regulations and interests. It is designed to facilitate secure cooperative analysis, meeting a pressing need in the research community. ImPACT seeks to develop an integrative model for management of trust, deploying a collection of supportive mechanisms at scale into a model cyber-infrastructure. The project develops methodologies with best practices in networking, data management, security, and privacy preservation to fit a variety of use cases.
 
-## Installation: Major Components
-1. The **Proconsul web application** (or the abridged proconsul, described below)
-1. **Shibboleth with optional Grouper** — _for authentication and authorization_
-1. **Active Directory Domain Controller** — _to hold temporary accounts used for temporal virtual machine login_
-1. **Singularity Hub** — _for storing Singularity images of end-user applications_
-1. **Jenkins** — _for continuous integration testing of Singularity images_
+## Installation: Major Components 
 
-Proconsul's author, [Rob Carter](https://github.com/carte018), has excellent instructions [here](https://github.com/carte018/Proconsul/tree/master/Dockerized).
+ImPACT has configured two types of environments to support researchers in sharing data and collaborating on its analysis. The first one discussed on this page is the full Proconsul Environment. It requires more resources to implement than the second one, the Abridged Proconsul Environment. Choose the environment that works best given your resource situation. Condensed installation instructions documenting our experiences installing and configuring the software are below.
 
-Condensed installation instructions documenting our experiences installing and configuring the software are below.
+**Proconsul Environment** 
+- Prerequisites for Identity Management
+  - Shibboleth with optional Grouper — _for authentication and authorization_
+  - Active Directory Domain Controller — _to hold temporary accounts used for temporal virtual machine login_
+- Containers for Secured Analysis Software
+  - Singularity Hub — _for storing Singularity images of end-user applications_
+- ImPACT's Instantiation of Proconsul
+  - Proconsul's author, [Rob Carter](https://github.com/carte018), has excellent, detailed instructions [here](https://github.com/carte018/Proconsul/tree/master/Dockerized). 
+
+**Abridged Proconsul Environment**
+- Linux VMs
+- TurboVNC
+- Singularity Client
+
+**Testing and Maintenance**
+- Jenkins — _for continuous integration testing of Singularity images_
+
 
 ### _Prerequisite:_ Shibboleth, optional Grouper
 
