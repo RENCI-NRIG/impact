@@ -1,3 +1,3 @@
-## Secure Multipary Computation (SMC)
+## Secure Multipary Computations (SMC)
 
 More to come!
