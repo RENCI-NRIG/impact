@@ -10,7 +10,7 @@ The major architectural elements include:
     - **Proconsul** - A browser-based remote desktop solution that provides responsive desktop access to the enclave, running either Windows or Linux. It uses federated identity solutions to authenticate and authorize users to specific hosts. 
     - **A Singularity-based software pipeline** - Allows researchers to customize their enclaves by easily adding new trusted analysis tools. The tools can be built by the researchers themselves or by their organization’s IT personnel. Tools can be built and tested outside of the enclave, digitally signed, and then made available in a repository within the enclave for researchers to use.
 
-- **Dataverse** - A web application (http://dataverse.org) that is used by the data providers to register the protected datasets so they can be discovered by researchers. 
+- **<a href="https://github.com/RENCI-NRIG/impact/blob/master/dataverse.md">Dataverse</a>** - A web application (http://dataverse.org) that is used by the data providers to register the protected datasets so they can be discovered by researchers. 
 
 - **Notary Service** - Helps the principals negotiate data use agreement (DUA)  policies. Data providers can register their policies with the service, and other principals (researchers, infrastructure providers, representatives of institutional governance) can make digitally-signed statements or attestations confirming compliance with various parts of the policies. Statements recorded by the Notary Service can then be used to automatically grant or deny access to the protected data made by researchers directly or on their behalf from the enclave.
 
