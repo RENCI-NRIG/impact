@@ -12,7 +12,7 @@ The major architectural elements include:
 
 - **<a href="https://github.com/RENCI-NRIG/impact/blob/master/dataverse.md">Dataverse</a>** - A web application (http://dataverse.org) that is used by the data providers to register the protected datasets so they can be discovered by researchers. 
 
-- **SAFE** - The main mechanism for expressing and enforcing security policies about data in ImPACT. It is used by principals to create and store certificates expressing assertions or policies about data and to validate access attempts according to those policies.
+- **<a href="https://github.com/RENCI-NRIG/impact/blob/master/safe.md">SAFE</a>** - The main mechanism for expressing and enforcing security policies about data in ImPACT. It is used by principals to create and store certificates expressing assertions or policies about data and to validate access attempts according to those policies.
 
 - **<a href="https://github.com/RENCI-NRIG/impact/blob/master/notaryservice.md">Notary Service</a>** - Helps the principals negotiate data use agreement (DUA)  policies. Data providers can register their policies with the service, and other principals (researchers, infrastructure providers, representatives of institutional governance) can make digitally-signed statements or attestations confirming compliance with various parts of the policies. Statements recorded by the Notary Service can then be used to automatically grant or deny access to the protected data made by researchers directly or on their behalf from the enclave.
 
