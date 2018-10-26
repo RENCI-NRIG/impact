@@ -47,10 +47,11 @@ In order to improve performance and minimize the incidence of software bugs, we 
 
 ### Singularity Client
 
-
+Installed per [https://github.com/singularityhub/singularity-cli](https://github.com/singularityhub/singularity-cli)
 
 ### Odum's Singularity Hub
 
+Installed per [https://github.com/singularityhub/sregistry](https://github.com/singularityhub/sregistry)
 
 ## PRDN with Proconsul
 
@@ -213,4 +214,8 @@ Fun with semantics: in this case, _rebuild_ means _rebuild everything except the
 
 ### SingularityHub
 
+Installed per [https://github.com/singularityhub/sregistry](https://github.com/singularityhub/sregistry)
+
 ### Jenkins
+
+A standard (CentOS RPM-managed) Jenkins installation receives webhooks from each push to a GitHub repo containing Singularity source files. The Jenkins job pulls the source for the image, compiles the image, and on successful compilation uploads the image to the SingularityHub for end-user consumption.
