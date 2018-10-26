@@ -2,24 +2,27 @@
 
 ## Installation: Major Components 
 
-ImPACT has configured two types of protected research data networks (PRDN) to support researchers in sharing data and collaborating on its analysis. Both PRDNs attempt to accomplish the same functions. 
+ImPACT has configured two types of protected research data networks (PRDN) to support researchers in sharing data and collaborating on its analysis. Both PRDNs attempt to accomplish the same functions.
+
 - Both provide secure authentication and authorization of users. 
 - Both provide a remote desktop view into a private network for sharing data and accessing services and software. 
 - Both are firewalled against unwanted inflitration and exfiltration of sensitve data. 
 
-The first one discussed on this page is the _Abridged PRDN_. It requires fewer resources to implement and was ImPACT's first step toward the second one, the _PRDN with Proconsul_. Choose the environment that works best given your resource situation. 
+The first one discussed on this page is the _Abridged PRDN_. It requires fewer resources to implement and was ImPACT's first step toward the full version, the _PRDN with Proconsul_. Choose the environment that works best given your resource situation. 
 
 **Abridged PRDN**
+
 - Linux VMs - _Runs all the software (e.g., TurboVNC) necessary for the private network and hosts a secure data staging server._
 - TurboVNC - _Provides secure authentication and authorization of users, and a remote desktop view (with the Linux operating system) into the private network._
 - Singularity Client - _Specially configured software that allows access to download data analysis applications stored in Odum's Singularity Hub._
 - Odum's Singularity Hub - _Stores Singularity images (see https://singularity.lbl.gov/) of end-user data analysis applications._
 
-**PRDN with Proconsul** 
+**PRDN with Proconsul**
+
 - Prerequisites for Identity Management
   - Shibboleth with optional Grouper — _Provides secure authentication and authorization of users._
   - Active Directory Domain Controller — _Holds temporary accounts used for temporal virtual machine login._
-- Odum's Singularity Hub — _Stores Singularity images (see https://singularity.lbl.gov/) of end-user data analysis applications._
+- Odum's Singularity Hub — _Stores Singularity images of end-user data analysis applications. See [https://singularity.lbl.gov/](https://singularity.lbl.gov/) for more information._
 - ImPACT's Instantiation of Proconsul - _A secured interface (i.e., remote desktop view, either with Linux or Windows operating systems) into the private network, firewalled against unwanted data infiltration/exfiltration._
   
   Proconsul's author, [Rob Carter](https://github.com/carte018), has excellent, detailed instructions [here](https://github.com/carte018/Proconsul/tree/master/Dockerized). 
@@ -32,13 +35,19 @@ Condensed installation instructions documenting our experiences installing and c
 
 ## Abridged PRDN
 
-Information coming soon.
-
 ### Linux VMs
+
+Test VMs are installed with CentOS 7, and are accessed through a bastion host. At present users connect via ssh using X11 forwarding, then launch a TigerVNC client to access the target VM graphically:
+
+	$ /opt/TurboVNC/bin/vncviewer target-hostname:display
 
 ### TurboVNC
 
+In order to improve performance and minimize the incidence of software bugs, we compiled more current TurboVNC RPMs from the [TurboVNC GitHub repo](https://github.com/TurboVNC/turbovnc/blob/master/BUILDING.md) and launched three TurboVNC listeners per VM with systemd unit files such as [this sample file](turbovnc.service.sample). Note that VMware VMs in particular will achieve the best performance by enabling 3D support in the VM's configuration.
+
 ### Singularity Client
+
+
 
 ### Odum's Singularity Hub
 
