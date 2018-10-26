@@ -47,7 +47,10 @@ In order to improve performance and minimize the incidence of software bugs, we 
 
 ### Singularity Client
 
-Installed per [https://github.com/singularityhub/singularity-cli](https://github.com/singularityhub/singularity-cli)
+From the EPEL repository, provided by the **epel-release** package:
+
+	$ yum install epel-release
+	$ yum install singularity
 
 ### Odum's Singularity Hub
 
@@ -67,31 +70,14 @@ If you are able to use the included Shibboleth service provider, you may configu
 
 This section shamelessly stolen from [Rob Carter](https://github.com/carte018)).
 
-Proconsul can be used for a number of purposes, from managing privileged access within
-an AD and reducing the attack surface for domain admin accounts within the AD to 
-providing federated, zero-client-install, access-controlled remote login access to 
-RDP- and VNC-capable hosts. In each case, Proconsul does much of 
-what it does by manipulating objects in Active Directory.  As such, there is some 
-preparation required in your AD in order to deploy and use Proconsul.
+Proconsul can be used for a number of purposes, from managing privileged access within an AD and reducing the attack surface for domain admin accounts within the AD to providing federated, zero-client-install, access-controlled remote login access to RDP- and VNC-capable hosts. In each case, Proconsul does much of 
+what it does by manipulating objects in Active Directory.  As such, there is some  preparation required in your AD in order to deploy and use Proconsul.
 
-You will need to identify or prepare a few objects in your AD for Proconsul's use. As 
-you identify or prepare them, you'll want to note some information about them in order
-to complete the configuration step below. Specific items you'll need to prepare are:
+You will need to identify or prepare a few objects in your AD for Proconsul's use. As  you identify or prepare them, you'll want to note some information about them in order to complete the configuration step below. Specific items you'll need to prepare are:
 
-1. A UPN and password for Proconsul to use to bind to the AD.  This need not be a 
-dedicated user for Proconsul's use, but it's strongly recommended -- using a bespoke
-user for Proconsul will help avoid conflicting requirements between applications 
-sharing the user account, and will allow you better audit options for actions Proconsul
-performs in your AD.  **If you plan to use Proconsul to delegate domain admin 
-access** the AD user that Proconsul binds with **must** have domain admin rights.  In 
-that scenario, you may choose to make it the **only** persistent AD account with 
-domain admin rights, but it needs that level of access in order to create and assign
-domain admin rights to its dynamically-provisioned AD users.  Otherwise, this may be 
-a "normal" AD user (to which specific rights will be assigned below).
+1. A UPN and password for Proconsul to use to bind to the AD.  This need not be a dedicated user for Proconsul's use, but it's strongly recommended -- using a bespoke user for Proconsul will help avoid conflicting requirements between applications sharing the user account, and will allow you better audit options for actions Proconsul performs in your AD.  **If you plan to use Proconsul to delegate domain admin access** the AD user that Proconsul binds with **must** have domain admin rights. In that scenario, you may choose to make it the **only** persistent AD account with domain admin rights, but it needs that level of access in order to create and assign domain admin rights to its dynamically-provisioned AD users. Otherwise, this may be a "normal" AD user (to which specific rights will be assigned below).
 
-2. An OU in the AD where Proconsul will provision and deprovision its dynamic users. This need not be a dedicated OU, but it is strongly recommended -- using a bespoke OU 
-for Proconsul dynamic users will allow you to more easily track Proconsul activity,
-and may allow you to limit the scope of rights the Proconsul server can exericise.
+2. An OU in the AD where Proconsul will provision and deprovision its dynamic users. This need not be a dedicated OU, but it is strongly recommended -- using a bespoke OU for Proconsul dynamic users will allow you to more easily track Proconsul activity, and may allow you to limit the scope of rights the Proconsul server can exericise.
 **If the bind user identified above is NOT a domain admin user** you will need to 
 grant user management rights (at a minimum, create, delete, modify group membership, 
 and reset password rights for user class objects) to that user in this OU.  
@@ -127,16 +113,7 @@ It will only actually be used in the event that you configure Proconsul to
 manage delegated domain admin rights, but the tool will require a value for the 
 configuration option, regardless.
 
-6. **Optionally** create or identify a second user account for Proconsul's docker-gen
-instance to use.  If you are not using a domain admin account as the bind user for 
-Proconsul, you may simply re-use the bind user for this purpose.  If you are using 
-a domain admin account for the former purpose, you may want to create a separate 
-account with user management rights in the OU you created above for use by the 
-docker-gen process.  Docker-gen is a separate process (courtesy of Jason Wilder) used
-by the Proconsul distribution to handle clean-up of AD and MySQL artifacts when 
-Proconsul's spawned Docker containers terminate.  A domain admin account will 
-work just fine, but you may prefer to use a less privileged account with docker-gen
-for purposes of compartmentalization.
+6. **Optionally** create or identify a second user account for Proconsul's docker-gen instance to use.  If you are not using a domain admin account as the bind user for Proconsul, you may simply re-use the bind user for this purpose.  If you are using a domain admin account for the former purpose, you may want to create a separate account with user management rights in the OU you created above for use by the docker-gen process. Docker-gen is a separate process (courtesy of Jason Wilder) used by the Proconsul distribution to handle clean-up of AD and MySQL artifacts when Proconsul's spawned Docker containers terminate.  A domain admin account will work just fine, but you may prefer to use a less privileged account with docker-gen for purposes of compartmentalization.
 
 It is necessary to extend the Active Directory schema to include POSIX mappings for users who will use Proconsul to log in to Linux machines, configured with [SSSd](sssd.conf). The minimum attribute set required includes uidNumber, gidNumber, homeDirectory, and loginShell. homeDirectory may be left blank but would relegate users to a default home directory at the root of the filesystem.
 
@@ -150,11 +127,11 @@ For the impact project we're running a CentOS 7 VM with two cores and four GB of
 
 To build Proconsul you will need a JDK and maven, for instance:
 
-```yum install java-1.8.0-openjdk-devel maven```
+`$ yum install java-1.8.0-openjdk-devel maven`
 
 Retrieve the current source from GitHub:
 
-```git clone https://github.com/carte018/proconsul```
+`$ git clone https://github.com/carte018/proconsul`
 
 Proconsul requires a public/private key pair and a signed SSL certificate in order to operate, and the subject of the certificate must match the name users will use when connecting to the service. You will need to provide the names of two files -- one containing a PEM- formatted version of the server's private key and one containing a PEM-formatted version of the SSL certificate you'll be using for your Proconsul server in order to build the Proconsul installation.
 
@@ -219,3 +196,30 @@ Installed per [https://github.com/singularityhub/sregistry](https://github.com/s
 ### Jenkins
 
 A standard (CentOS RPM-managed) Jenkins installation receives webhooks from each push to a GitHub repo containing Singularity source files. The Jenkins job pulls the source for the image, compiles the image, and on successful compilation uploads the image to the SingularityHub for end-user consumption.
+
+### Linux VMs
+
+The full PRDN uses Linux target VMs as well, but they require further configuration. They'll need the following additional packages:
+
+`$ yum install xrdp xorgrdp samba-libs samba-common-tools sssd-ad sssd-ldap sssd-krb5 oddjob-mkhomedir`
+
+You may use this [sssd.conf sample](sssd.conf.sample) as a sign-post toward a working sssd configuration.
+
+You'll need to bind the Linux VM to active directory, specifying the FQDN of the controller if your DNS, like ours, isn't 100% controlled by Active Directory:
+
+`$ sudo net ads join -s activedirectory.fqdn -k`
+
+- Note that the machine's "short" hostname must not exceed the Microsoft maximum of 15 characters, or the machine's entry in Active Directory will be truncated.
+
+## Firewall Rules
+
+For the Abridged PRDN the firewall requirements are minimal (SSH at the perimeter, a VNC port range large enough to accomodate the anticipated maximum number of simultaneous users).
+
+For the full PRDN the incoming requirements are both https (443/tcp) AND a VNC port range twice as large as the anticipated maximum number of simultaneous users (in our case, 5900-6000/tcp).
+
+Our PRDN is behind a Juniper firewall so we've purposefully set the default outgoing rule to DENY. We then had to open ports for the following services:
+
+ - campus DNS (53 tcp/udp)
+ - campus NTP (123 tcp/udp)
+ - HTTPS (443/tcp) to our SingularityHub, campus CentOS mirror, Shibboleth, etc.
+ 
