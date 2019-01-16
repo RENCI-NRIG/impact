@@ -1,0 +1,15 @@
+[Unit]
+Description=TurboVNC Server for X11
+Requires=display-manager.service
+After=display-manager.service
+
+[Service]
+Type=forking
+User=impact2
+Group=impact2
+ExecStart=/bin/bash -c '/opt/TurboVNC/bin/vncserver :2 -geometry 1600x1200 -log /var/log/turbovnc2.log'
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

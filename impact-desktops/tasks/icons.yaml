@@ -1,0 +1,9 @@
+---
+
+- name: place rstudio menu icon
+  copy:
+    src: rstudio.desktop
+    dest: /usr/share/applications
+    owner: root
+    group: root
+    mode: 0644

@@ -1,0 +1,6 @@
+Proconsul	ActiveDirectory
+---------	---------------
+uidNumber	PosixAccount
+gidNumber	GidNumber
+homeDirectory	Home-Directory
+loginShell	/bin/bash

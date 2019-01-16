@@ -1,0 +1,90 @@
+---
+
+- name: copy turbovnc rpm
+  copy:
+    src: "turbovnc-{{ impact.vnc.version }}.x86_64.rpm"
+    dest: "/tmp/turbovnc-{{ impact.vnc.version }}.x86_64.rpm"
+
+- name: install turbovnc rpm
+  shell: "yum install -y /tmp/turbovnc-{{ impact.vnc.version }}.x86_64.rpm"
+  ignore_errors: yes
+
+- name: create .vnc subdirectory
+  file:
+    name: "/home/{{ item }}'/.vnc"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    state: directory
+    mode: 0700
+  loop:
+    - user1
+    - user2
+    - user3
+
+# this is fine for our test setup. probably not your production.
+- name: install vnc passwd file
+  copy:
+    src: passwd
+    dest: "/home/"{{ item }}/passwd"
+    owner: "{{ item }}"
+    group: "{{ group }}"
+    mode: 0600
+
+- name: place impact systemd unit file
+  copy:
+    src: turbovnc.service
+    dest: "/usr/lib/systemd/system/turbovnc.service"
+
+- name: touch vnc logfile
+  file:
+    path: /var/log/turbovnc.log
+    owner: impact
+    group: impact
+    state: touch
+
+- name: place impact2 systemd unit file
+  copy:
+    src: turbovnc2.service
+    dest: "/usr/lib/systemd/system/turbovnc2.service"
+
+- name: touch vnc2 logfile
+  file:
+    path: /var/log/turbovnc2.log 
+    owner: impact2
+    group: impact2
+    state: touch
+
+- name: place impact3 systemd unit file
+  copy:
+    src: turbovnc3.service
+    dest: "/usr/lib/systemd/system/turbovnc3.service"
+
+- name: touch vnc3 logfile
+  file:
+    path: /var/log/turbovnc3.log
+    owner: impact3
+    group: impact3
+    state: touch
+
+- name: reload systemd
+  systemd:
+    daemon_reload: yes
+
+- name: enable turbovnc service
+  systemd:
+    name: turbovnc
+    enabled: yes
+    state: started
+
+- name: enable turbovnc2 service
+  systemd:
+    name: turbovnc2
+    enabled: yes
+    state: started
+
+- name: enable turbovnc3 service
+  systemd:
+    name: turbovnc3
+    enabled: yes
+    state: started
+

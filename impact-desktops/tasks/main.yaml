@@ -1,0 +1,7 @@
+---
+
+- include: system_cfg.yaml
+- include: users.yaml
+- include: vnc.yaml
+- include: proconsul-client.yaml
+- include: icons.yaml

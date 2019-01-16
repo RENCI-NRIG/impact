@@ -1,0 +1,37 @@
+---
+
+# create impact users and groups.
+# you may want to specify their uids and gids as this can determine group file access through POSIX mapping.
+
+- name: place impact .sregistry config file in each home directory
+  copy:
+    src: .sregistry
+    dest: "/home/{{ item }}/.sregistry"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: 0644
+  loop:
+    - user1
+    - user2
+    - user3
+
+# add sregistry_client env var to each user's .bash_profile
+- name: tell sregistry to use singularityhub
+  lineinfile:
+    path: "/home/{{ item }}/.bash_profile"
+    line: 'export SREGISTRY_CLIENT=registry'
+    state: present
+  loop:
+    - user1
+    - user2
+    - user3
+
+- name: disable screensaver in .xsession
+  lineinfile:
+    path: "/home/{{ item }}/.xsession"
+    line: 'xset s off'
+    create: yes
+  loop:
+    - user1
+    - user2
+    - user3

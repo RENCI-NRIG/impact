@@ -1,0 +1,13 @@
+impact:
+  ad:
+    dc: 
+    admin_user: 
+    admin_pass: 
+  jumpbox:
+    ipv4:
+    vncports: 5900-5910
+  nfs:
+    mount: /client/mount
+    path: 0.0.0.0:/share
+  vnc:
+    version: 2.1.90

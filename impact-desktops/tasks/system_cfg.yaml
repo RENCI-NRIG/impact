@@ -1,0 +1,46 @@
+---
+
+- name: ensure shared NFS mount exists
+  file:
+    name: "{{ impact.nfs.mount }}"
+    state: directory
+
+- name: mount shared NFS mount
+  mount:
+    path: "{{ impact.nfs.mount }}"
+    src: "{{ impact.nfs.path }}"
+    fstype: nfs
+    opts: rw,rsize=32768,wsize=32768,hard,intr,vers=3
+    state: mounted
+    backup: yes
+
+- name: VNC firewall punches for jumpbox
+  firewalld:
+    rich_rule: 'rule family="ipv4" source address="{{ impact.jumpbox.ipv4 }}"" port port="{{ impact.jumpbox.vncports }}" protocol="tcp" accept'
+    permanent: true
+    state: enabled
+
+- name: reload firewalld
+  shell: "/bin/firewall-cmd --reload"
+
+- name: install singularity
+  yum:
+    name: singularity
+    state: latest
+
+- name: install python34 packages
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - python34-pip
+    - python34-dns
+    - python34-pygments
+    - python34-pytest
+    - python34-pytest-runner
+    - python34-simplejson
+
+# in theory, ansible would install sregistry here. YMMV.
+- name: install sregistry
+  pip:
+    name: sregistry

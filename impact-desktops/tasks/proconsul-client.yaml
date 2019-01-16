@@ -1,0 +1,100 @@
+---
+
+- name: install required packages
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - xrdp
+    - xorgxrdp
+    - samba-libs
+    - samba-common-tools
+    - sssd-ad
+    - sssd-ldap
+    - sssd-krb5
+    - openldap-clients
+    - oddjob-mkhomedir
+
+- name: must use AD controller as primary DNS
+  copy:
+    src: resolv.conf
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: place updated password-auth-ac
+  copy:
+    src: password-auth-ac
+    dest: /etc/pam.d/password-auth-ac
+    owner: root
+    group: root
+    mode: 0644
+
+- name: allow linux-users in unconditionally
+  lineinfile:
+    path: /etc/security/access.conf
+    line: '+:(linux-users):ALL'
+    state: present
+
+- name: place smb.conf
+  template:
+    src: smb.conf.j2
+    dest: /etc/samba/smb.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: place krb5.conf
+  copy:
+    src: krb5.conf
+    dest: /etc/krb5.conf
+    owner: root
+    group: root
+    mode: 0644
+
+#- name: join to domain. you may want to do this manually.
+#  shell: 'net ads join -U {{ impact.ad.admin_user }}%{{ impact.ad.admin_pass }}@{{ impact.ad.dc }}` -S {{ impact.ad.dc }} -k'
+
+- name: place sssd.conf
+  copy:
+    src: sssd.conf
+    dest: /etc/sssd/sssd.conf
+    owner: root
+    group: root
+    mode: 0600
+
+- name: restart sssd.conf
+  systemd:
+    name: sssd
+    state: restarted
+    enabled: yes
+
+- name: install xrdp
+  yum:
+    name: xrdp
+    state: latest
+
+- name: place modified xrdp-sesman PAM conf
+  copy:
+    src: xrdp-sesman
+    dest: /etc/pam.d/xrdp-sesman
+    owner: root
+    group: root
+    mode: 0644
+
+- name: enable and start xrdp
+  systemd:
+    name: xrdp
+    state: started
+    enabled: yes
+
+- name: allow RDP through firewall
+  firewalld:
+    port: 3389/tcp
+    permanent: true
+    state: enabled
+
+- name: reload firewalld
+  shell:
+    cmd: 'firewall-cmd --reload'

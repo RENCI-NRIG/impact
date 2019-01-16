@@ -1,0 +1,10 @@
+{
+"registry":
+ {
+  "base": "https://yoursingularityhub.yourinstitution.edu"
+ },
+ "hub":
+ {
+  "base": "https://singularity-hub.org/api"
+ }
+}
