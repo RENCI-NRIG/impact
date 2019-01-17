@@ -1,0 +1,16 @@
+if (action.id == "org.freedesktop.login1.reboot" ||
+        action.id == "org.freedesktop.login1.reboot-multiple-sessions") {
+        if (subject.isInGroup("wheel")) {
+            return polkit.Result.YES;
+        } else {
+            return polkit.Result.NO;
+        }
+    } else if (action.id == "org.freedesktop.login1.power-off" ||
+               action.id == "org.freedesktop.login1.power-off-multiple-sessions") {
+        if (subject.isInGroup("wheel")) {
+            return polkit.Result.AUTH_ADMIN;
+        } else {
+            return polkit.Result.NO;
+        }
+    }
+});

@@ -44,3 +44,11 @@
 - name: install sregistry
   pip:
     name: sregistry
+
+- name: disable GUI reboot and shutdown buttons
+  copy:
+    src: 00-disable_reboot.rules
+    dest: /etc/polkit-1/rules.d/00-disable_reboot.rules
+    owner: root
+    group: root
+    mode: 0644
