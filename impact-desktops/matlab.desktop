@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=/mnt/impact/images/matlab.sh
+Name=Matlab
+GenericName=Matlab
+Comment=Matlab
+Encoding=UTF-8
+Terminal=true
+Type=Application
+Categories=Application

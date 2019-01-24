@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=/mnt/impact/images/anaconda.sh
+Name=Anaconda
+GenericName=Anaconda
+Comment=Anaconda
+Encoding=UTF-8
+Terminal=true
+Type=Application
+Categories=Application

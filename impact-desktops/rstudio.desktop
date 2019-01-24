@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=/mnt/impact/images/rstudio.sh
+Name=RStudio
+GenericName=RStudio
+Comment=RStudio
+Encoding=UTF-8
+Terminal=true
+Type=Application
+Categories=Application

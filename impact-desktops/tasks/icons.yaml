@@ -1,9 +1,14 @@
 ---
 
-- name: place rstudio menu icon
+- name: place desktop menu icons
   copy:
-    src: rstudio.desktop
+    src: "{{ item }}"
     dest: /usr/share/applications
     owner: root
     group: root
     mode: 0644
+  with_items:
+    - rstudio.desktop
+    - matlab.desktop
+    - jupyter.desktop
+    - anaconda.desktop

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Exec=/mnt/impact/images/jupyter.sh
+Name=Jupyter
+GenericName=Jupyter
+Comment=Jupyter
+Encoding=UTF-8
+Terminal=true
+Type=Application
+Categories=Application
