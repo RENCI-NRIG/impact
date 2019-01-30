@@ -1,23 +1,23 @@
-# Protected Research Data Network (PRDN)
+# Protected Research Enclave
 
 ## Installation: Major Components 
 
-ImPACT has configured two types of protected research data networks (PRDN) to support researchers in sharing data and collaborating on its analysis. Both PRDNs attempt to accomplish the same functions.
+ImPACT has configured two types of protected research enclaves to support researchers in sharing data and collaborating on its analysis. Both attempt to accomplish the same functions.
 
 - Both provide secure authentication and authorization of users. 
 - Both provide a remote desktop view into a private network for sharing data and accessing services and software. 
 - Both are firewalled against unwanted inflitration and exfiltration of sensitve data. 
 
-The first one discussed on this page is the _Abridged PRDN_. It requires fewer resources to implement and was ImPACT's first step toward the full version, the _PRDN with Proconsul_. Choose the environment that works best given your resource situation. 
+The first one discussed on this page is the _Abridged Enclave_. It requires fewer resources to implement and was ImPACT's first step toward the full version, the _Enclave with Proconsul_. Choose the environment that works best given your resource situation. 
 
-**Abridged PRDN**
+**Abridged Enclave**
 
 - Linux VMs - _Runs all the software (e.g., TurboVNC) necessary for the private network and hosts a secure data staging server._
 - TurboVNC - _Provides secure authentication and authorization of users, and a remote desktop view (with the Linux operating system) into the private network._
 - Singularity Client - _Specially configured software that allows access to download data analysis applications stored in Odum's Singularity Hub._
 - Odum's Singularity Hub - _Stores Singularity images (see https://singularity.lbl.gov/) of end-user data analysis applications._
 
-**PRDN with Proconsul**
+**Enclave with Proconsul**
 
 - Prerequisites for Identity Management
   - Shibboleth with optional Grouper — _Provides secure authentication and authorization of users._
@@ -33,7 +33,7 @@ The first one discussed on this page is the _Abridged PRDN_. It requires fewer r
 Condensed installation instructions documenting our experiences installing and configuring the software are below.
 
 
-## Abridged PRDN
+## Abridged enclave
 
 ### Linux VMs
 
@@ -56,7 +56,7 @@ From the EPEL repository, provided by the **epel-release** package:
 
 Installed per [https://github.com/singularityhub/sregistry](https://github.com/singularityhub/sregistry)
 
-## PRDN with Proconsul
+## Enclave with Proconsul
 
 ### _Prerequisite:_ Shibboleth, optional Grouper
 
@@ -199,7 +199,7 @@ A standard (CentOS RPM-managed) Jenkins installation receives webhooks from each
 
 ### Linux VMs
 
-The full PRDN uses Linux target VMs as well, but they require further configuration. They'll need the following additional packages:
+The full enclave uses Linux target VMs as well, but they require further configuration. They'll need the following additional packages:
 
 `$ yum install xrdp xorgrdp samba-libs samba-common-tools sssd-ad sssd-ldap sssd-krb5 oddjob-mkhomedir`
 
@@ -213,11 +213,11 @@ You'll need to bind the Linux VM to active directory, specifying the FQDN of the
 
 ## Firewall Rules
 
-For the Abridged PRDN the firewall requirements are minimal (SSH at the perimeter, a VNC port range large enough to accomodate the anticipated maximum number of simultaneous users).
+For the Abridged enclave the firewall requirements are minimal (SSH at the perimeter, a VNC port range large enough to accomodate the anticipated maximum number of simultaneous users).
 
-For the full PRDN the incoming requirements are both https (443/tcp) AND a VNC port range twice as large as the anticipated maximum number of simultaneous users (in our case, 5900-6000/tcp).
+For the full enclave the incoming requirements are both https (443/tcp) AND a VNC port range twice as large as the anticipated maximum number of simultaneous users (in our case, 5900-6000/tcp).
 
-Our PRDN is behind a Juniper firewall so we've purposefully set the default outgoing rule to DENY. We then had to open ports for the following services:
+Our enclave is behind a Juniper firewall so we've purposefully set the default outgoing rule to DENY. We then had to open ports for the following services:
 
  - campus DNS (53 tcp/udp)
  - campus NTP (123 tcp/udp)
