@@ -15,6 +15,18 @@
     - openldap-clients
     - oddjob-mkhomedir
 
+- name: set xserverbpp=24 for vnc clients
+  lineinfile:
+    line: 'xserverbpp=24'
+    path: /etc/xrdp/xrdp.ini
+    insertafter: '[Xorg]'
+
+- name: lineinfile doesn't support loops, so do the same for Xvnc
+  lineinfile:
+    line: 'xserverbpp=24'
+    path: /etc/xrdp/xrdp.ini
+    insertafter: '[Xvnc]'
+
 - name: must use AD controller as primary DNS
   copy:
     src: resolv.conf
@@ -69,11 +81,6 @@
     name: sssd
     state: restarted
     enabled: yes
-
-- name: install xrdp
-  yum:
-    name: xrdp
-    state: latest
 
 - name: place modified xrdp-sesman PAM conf
   copy:

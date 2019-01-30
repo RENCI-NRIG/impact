@@ -35,3 +35,15 @@
     - user1
     - user2
     - user3
+
+- name: make MATE default session manager
+  copy:
+    src: .Xclients
+    dest: "/home/{{ item }}/.Xclients"
+    owner: "{{ item }}"
+    group: "{{ item }}"
+    mode: 0700
+  with_items:
+    - user1
+    - user2
+    - user3
