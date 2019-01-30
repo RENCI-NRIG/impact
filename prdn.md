@@ -33,7 +33,7 @@ The first one discussed on this page is the _Abridged Enclave_. It requires fewe
 Condensed installation instructions documenting our experiences installing and configuring the software are below.
 
 
-## Abridged enclave
+## Abridged Enclave
 
 ### Linux VMs
 
