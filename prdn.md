@@ -211,6 +211,8 @@ You'll need to bind the Linux VM to active directory, specifying the FQDN of the
 
 - Note that the machine's "short" hostname must not exceed the Microsoft maximum of 15 characters, or the machine's entry in Active Directory will be truncated.
 
+For certain graphical applications such as Gephi and Matlab to work well in Singularity on CentOS target VMs we found it necessary to add 'xserverbpp=24' to the [Xvnc] and [Xorg] sections of /etc/xrdp/xrdp.ini.
+
 ## Firewall Rules
 
 For the Abridged PRDN the firewall requirements are minimal (SSH at the perimeter, a VNC port range large enough to accomodate the anticipated maximum number of simultaneous users).
