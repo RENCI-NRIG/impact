@@ -58,6 +58,11 @@
     name: "@MATE"
     state: latest
 
+- name: but not the MATE screensaver.
+  file:
+    path: /etc/xdg/autostart/mate-screensaver.desktop
+    state: absent
+
 - name: create lock dir for mate db
   file:
     path: /etc/dconf/db/mate.d/lock/

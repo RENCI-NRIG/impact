@@ -26,15 +26,16 @@
     - user2
     - user3
 
-- name: disable screensaver in .xsession
-  lineinfile:
-    path: "/home/{{ item }}/.xsession"
-    line: 'xset s off'
-    create: yes
+- name: disable screensaver via .xsession
+  copy:
+    src: '.xsession'
+    dest: "/home/{{ item }}/"
+    owner: "{{ item }}"
+    group: "{{ item }}"
   loop:
-    - user1
-    - user2
-    - user3
+    - impact
+    - impact2
+    - impact3
 
 - name: make MATE default session manager
   copy:

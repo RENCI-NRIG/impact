@@ -211,7 +211,9 @@ You'll need to bind the Linux VM to active directory, specifying the FQDN of the
 
 - Note that the machine's "short" hostname must not exceed the Microsoft maximum of 15 characters, or the machine's entry in Active Directory will be truncated.
 
-For certain graphical applications such as Gephi and Matlab to work well in Singularity on CentOS target VMs we found it necessary to add 'xserverbpp=24' to the [Xvnc] and [Xorg] sections of /etc/xrdp/xrdp.ini.
+For certain graphical applications such as Gephi and Matlab to work well in Singularity on CentOS target VMs we found it necessary to add `xserverbpp=24` to the [Xorg] section of _/etc/xrdp/xrdp.ini_.
+
+To prevent attempted user copy-pastes from killing their session, we also needed to set `autorun=Xorg` in _/etc/xrdp/xrdp.ini_.
 
 ## Firewall Rules
 
