@@ -1,4 +1,4 @@
-# Protected Research Enclave
+# Protected Data Enclave
 
 ## Installation: Major Components 
 
