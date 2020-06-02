@@ -19,3 +19,5 @@ The major architectural elements include:
 - **<a href="https://github.com/RENCI-NRIG/impact/blob/master/smc.md">Secure Multiparty Computations (SMC)</a>** - A special type of enclave that relies on cryptographic communications to selectively expose aggregate information about the data in data provider stores will be addressed in a separate series of blog posts.
 
 - **<a href="https://github.com/OdumInstitute/trsa-web">Trusted Remote Storage Agent</a>** - A bolt-on storage subsystem for Dataverse to allow researchers access to sensitive data as negotiated by the Notary service.
+
+- **[Presidio](https://github.com/RENCI-NRIG/impact-presidio)** - an agent providing browser access to a data repository, while enforcing data provider policies, and opening access in accordance to assertions made to the Notary Service.
