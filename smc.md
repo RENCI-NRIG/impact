@@ -1,3 +1,3 @@
 ## Secure Multipary Computations (SMC)
 
-More to come!
+More information available [here](https://github.com/RENCI-NRIG/impact-smc)
